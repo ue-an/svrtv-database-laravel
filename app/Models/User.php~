@@ -1,0 +1,111 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+/**
+ * @property string $user_id
+ * @property string $email
+ * @property string $last_name
+ * @property string $first_name
+ * @property string $mobile_no
+ * @property boolean $is_bonafied
+ * @property boolean $is_feast_attendee
+ * @property string $feast_name
+ * @property string $feast_district
+ * @property string $address
+ * @property string $city
+ * @property string $country
+ * @property EventsTicketItem[] $eventsTicketItems
+ * @property FeastappRecord[] $feastappRecords
+ * @property FeastbookTransaction[] $feastbookTransactions
+ * @property FeastmediaRecord[] $feastmediaRecords
+ * @property FeastmercyministryRecord[] $feastmercyministryRecords
+ * @property FeastphRecord[] $feastphRecords
+ * @property HolyweekretreatRecord[] $holyweekretreatRecords
+ */
+class User extends Model
+{
+    /**
+     * The primary key for the model.
+     * 
+     * @var string
+     */
+    protected $primaryKey = 'user_id';
+
+    /**
+     * The "type" of the auto-incrementing ID.
+     * 
+     * @var string
+     */
+    protected $keyType = 'string';
+
+    /**
+     * Indicates if the IDs are auto-incrementing.
+     * 
+     * @var bool
+     */
+    public $incrementing = false;
+
+    /**
+     * @var array
+     */
+    protected $fillable = ['email', 'last_name', 'first_name', 'mobile_no', 'is_bonafied', 'is_feast_attendee', 'feast_name', 'feast_district', 'address', 'city', 'country'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function eventsTicketItems()
+    {
+        return $this->hasMany('App\Models\EventsTicketItem', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feastappRecords()
+    {
+        return $this->hasMany('App\Models\FeastappRecord', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feastbookTransactions()
+    {
+        return $this->hasMany('App\Models\FeastbookTransaction', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feastmediaRecords()
+    {
+        return $this->hasMany('App\Models\FeastmediaRecord', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feastmercyministryRecords()
+    {
+        return $this->hasMany('App\Models\FeastmercyministryRecord', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function feastphRecords()
+    {
+        return $this->hasMany('App\Models\FeastphRecord', null, 'user_id');
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function holyweekretreatRecords()
+    {
+        return $this->hasMany('App\Models\HolyweekretreatRecord', null, 'user_id');
+    }
+}
