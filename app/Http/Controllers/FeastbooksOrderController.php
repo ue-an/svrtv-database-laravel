@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeastbooksOrder;
 use Illuminate\Http\Request;
 
 class FeastbooksOrderController extends Controller
@@ -13,7 +14,8 @@ class FeastbooksOrderController extends Controller
      */
     public function index()
     {
-        //
+        $fborders = FeastbooksOrder::all();
+        return view('feastbook_orders.index', compact('fborders'));
     }
 
     /**
@@ -23,7 +25,7 @@ class FeastbooksOrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastbook_orders.create');
     }
 
     /**

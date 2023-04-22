@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Event;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -13,7 +14,8 @@ class EventController extends Controller
      */
     public function index()
     {
-        //
+        $events = Event::all();
+        return view('events.index', compact('events'));
     }
 
     /**
@@ -23,7 +25,7 @@ class EventController extends Controller
      */
     public function create()
     {
-        //
+        return view('events.create');
     }
 
     /**
@@ -34,7 +36,16 @@ class EventController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'event_name'=>'required',
+            'event_type'=>'required',
+        ]);
+
+        $event = new Event();
+        $event->event_name = $request->event_name;
+        $event->event_type = $request->event_type;
+        $event->save();
+        return redirect('/events')->with('success', 'event data successfully added');
     }
 
     /**
@@ -54,9 +65,10 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Event $event)
     {
-        //
+        $event = Event::find($event->event_id);
+        return view('events.edit', compact('event'));
     }
 
     /**
@@ -66,9 +78,13 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Event $event)
     {
-        //
+        $event = Event::find($event->event_id);
+        $event->fill($request->all());
+        $event->save();
+
+        return redirect('/events')->with('success', 'event data successfully updated');
     }
 
     /**
@@ -77,8 +93,9 @@ class EventController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Event $event)
     {
-        //
+        $event->delete();
+        return redirect()->back()->with('success', 'event data successfully deleted');
     }
 }

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\HolyweekretreatRecord;
 use Illuminate\Http\Request;
 
 class HolyweekretreatRecordController extends Controller
@@ -13,7 +14,8 @@ class HolyweekretreatRecordController extends Controller
      */
     public function index()
     {
-        //
+        $hwrRecords = HolyweekretreatRecord::all();
+        return view('holyweekretreat_records.index', compact('hwrRecords'));
     }
 
     /**

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeastappRecord;
 use Illuminate\Http\Request;
 
 class FeastappRecordController extends Controller
@@ -13,7 +14,9 @@ class FeastappRecordController extends Controller
      */
     public function index()
     {
-        //
+        // $feastapp_records = FeastappRecord::join('attendees', 'feastapp_records.user_id', '=', 'attendees.user_id')->get();
+        $feastapp_records = FeastappRecord::all();
+        return view('feastapp_records.index', compact('feastapp_records'));
     }
 
     /**
@@ -23,7 +26,7 @@ class FeastappRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastapp_records.create');
     }
 
     /**

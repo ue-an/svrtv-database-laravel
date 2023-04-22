@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeastbookTransaction;
 use Illuminate\Http\Request;
 
 class FeastbookTransactionController extends Controller
@@ -13,7 +14,8 @@ class FeastbookTransactionController extends Controller
      */
     public function index()
     {
-        //
+        $fbtransactions = FeastbookTransaction::all();
+        return view('feastbook_transactions.index', compact('fbtransactions'));
     }
 
     /**
@@ -23,7 +25,7 @@ class FeastbookTransactionController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastbook_transactions.create');
     }
 
     /**
