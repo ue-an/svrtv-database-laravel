@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Attendee;
 use App\Models\Event;
+use App\Models\EventsTicket;
+use App\Models\EventsTicketItem;
 use Illuminate\Http\Request;
 
 class EventController extends Controller
@@ -14,8 +17,39 @@ class EventController extends Controller
      */
     public function index()
     {
-        $events = Event::all();
-        return view('events.index', compact('events'));
+        $events = EventsTicketItem::
+        // join('attendees', 'events_ticket_items.user_id', '=', 'attendees.user_id')->get();
+        join('events_tickets', 'events_ticket_items.ticket_id', '=', 'events_tickets.ticket_id')
+        ->join('events', 'events_tickets.event_id', '=', 'events.event_id')
+        ->join('events_orders', 'events_ticket_items.order_no', '=', 'events_orders.order_no')
+        ->join('attendees', 'events_ticket_items.user_id', '=', 'attendees.user_id')->get();
+
+        $users = Attendee::all();
+
+        $event_emails = [];
+
+        $event_uids = EventsTicketItem::join('attendees', 'events_ticket_items.user_id', '=', 'attendees.user_id')->get();
+        foreach ($event_uids as $uid) {
+            if (in_array($uid->email, $event_emails)) {
+                
+            } else {
+                array_push($event_emails, $uid->email);
+            }
+            
+        }
+
+        foreach ($users as $user) {
+            $uid =  $user->user_id;
+            $total_transactions = EventsTicketItem::join('events_tickets', 'events_ticket_items.ticket_id', '=', 'events_tickets.ticket_id')
+            ->join('events', 'events_tickets.event_id', '=', 'events.event_id')
+            ->join('events_orders', 'events_ticket_items.order_no', '=', 'events_orders.order_no')
+            ->join('attendees', 'events_ticket_items.user_id', '=', 'attendees.user_id')->get();
+            // ->where('events_ticket_items.user_id', '=', $uid)->get();
+        }
+
+        
+        // Event::all();
+        return view('events.index', compact('events', 'total_transactions', 'event_emails'));
     }
 
     /**

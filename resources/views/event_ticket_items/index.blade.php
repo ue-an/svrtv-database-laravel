@@ -21,26 +21,29 @@
              <thead>
                  <tr>
                      {{-- <th scope="col">#</th> --}}
-                     <th scope="col" style="width: 90px">Order No</th>
-                     <th scope="col">Ticket ID</th>
-                     <th scope="col">Name</th>
-                     <th scope="col">Event Name</th>
-                     <th scope="col">Ticket Name</th>
-                     <th scope="col">Ticket Type</th>
-                     <th scope="col">Quantity</th>
+                     <th scope="col" style="width: 90px">Email</th>
+                     <th scope="col">First Name</th>
+                     <th scope="col">Last Name</th>
+                     <th scope="col">Mobile No</th>
+                     <th scope="col">Country</th>
+                     <th scope="col">Number of Transactions Made</th>
+                     {{-- <th scope="col">Bought Ticket Years</th>
+                     <th scope="col">Total Tickets Bought</th>
+                     <th scope="col">Bought Last Year?</th> --}}
                      <th scope="col">Actions</th>
                  </tr>
              </thead>
              <tbody>
                 @foreach ($event_ticket_items as $eti)
                 <tr>
-                    <th scope="row"> {{$eti->order_no}} </th>
-                    <th scope="row"> {{$eti->ticket_id}} </th>
-                    <th scope="row"> {{ucfirst($eti->first_name).' '.ucfirst($eti->last_name)}} </th>
-                    <th scope="row"> {{$eti->event_name}} </th>
-                    <th scope="row"> {{$eti->ticket_name}} </th>
-                    <th scope="row"> {{$eti->ticket_type}} </th>
-                    <th scope="row"> {{$eti->quantity}} </th>
+                    <th scope="row"> {{$eti->email}} </th>
+                    <th scope="row"> {{ucfirst($eti->first_name)}} </th>
+                    <th scope="row"> {{ucfirst($eti->last_name)}} </th>
+                    <th scope="row"> {{$eti->mobile_no}} </th>
+                    <th scope="row"> {{$eti->country}} </th>
+                    {{-- interpreted data --}}
+                    <th scope="row"> {{$total_transactions}} </th>
+                    {{-- <th scope="row"> {{$eti->quantity}} </th> --}}
                     <td style="padding-left: 3rem">
                         <a style="padding-left: 21px; padding-right: 21px" href="/events/{{$eti->order_no}}/edit" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                         <form method="POST" action="/events/{{ $eti->order_no }}">

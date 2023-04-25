@@ -4,8 +4,8 @@
     <div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
       <ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-start mb-md-0">
         @auth
-        <li><a href="/" class="nav-link px-2 text-white">Home</a></li>
-        <li><a href="/attendees" class="nav-link px-2 text-white">Attendees</a></li>
+        <li><a href="/" class="nav-link px-2 text-white">Search</a></li>
+        <li><a href="/attendees" class="nav-link px-2 text-white">End Users</a></li>
         <li><a href="/events" class="nav-link px-2 text-white">Events</a></li>
         <li><a href="/feastbook-transactions" class="nav-link px-2 text-white">Feast Books</a></li>
         <li><a href="/feast-mercyministry" class="nav-link px-2 text-white">Feast Mercy Ministry</a></li>

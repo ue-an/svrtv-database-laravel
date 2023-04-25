@@ -61,6 +61,9 @@ Route::group(['namespace' => 'App\Http\Controllers'], function()
     Route::resource('/feast-app', FeastappRecordController::class);
     Route::resource('/holyweek-retreat', HolyweekretreatRecordController::class);
 
+    //uploads/imports
+    Route::post('/feast-app/fileupload','FeastappRecordController@upload')->name('feast-app.upload');
+
     // Route::get('file-import-export', [AttendeeController::class, 'fileImportExport']);
     // Route::post('file-import', [AttendeeController::class, 'fileImport'])->name('file-import');
     // Route::get('file-export', [AttendeeController::class, 'fileExport'])->name('file-export');

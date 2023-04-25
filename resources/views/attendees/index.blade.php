@@ -18,98 +18,11 @@
                             {{ session()->get('error') }}
                         </div>
                     @endif
-                    <div class="row">
-                        <div class="col-md-8">
-                            <h2>Attendees</h2>
-                            <table class="table table-striped table-bordered dt-responsive" style="width:100%" id="attendeeDisplay">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Name</th>
-                                        <th scope="col">Email</th>
-                                        <th scope="col">Mobile</th>
-                                        <th scope="col">Address</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @if ($chk_attendees  == null)
-                                        @foreach ($attendees as $attendee)
-                                            <tr>
-                                                <th scope="row"> {{ ucfirst($attendee->first_name)." ".ucfirst($attendee->last_name)}} </th>
-                                                <th scope="row"> {{$attendee->email}} </th>
-                                                <th scope="row"> {{$attendee->mobile_no}} </th>
-                                                <th scope="row"> {{ucfirst($attendee->address).", ".ucfirst($attendee->city).", ".ucfirst($attendee->country)}} </th>
-                                            </tr>
-                                        @endforeach
-                                        @else
-                                            @foreach ($attendees as $att)
-                                                @foreach ($chk_attendees as $filter)
-                                                    @if ($att->user_id == $filter->user_id)
-                                                        <tr>
-                                                            <th scope="row"> {{$att->user_id}} </th>
-                                                            <th scope="row"> {{$att->email}} </th>
-                                                            <th scope="row"> {{ ucfirst($att->last_name)}} </th>
-                                                            <th scope="row"> {{ ucfirst($att->first_name)}} </th>
-                                                            <th scope="row"> {{$att->mobile_no}} </th>
-                                                            <th scope="row"> {{$strVal =  $att->is_bonafied == "0"? "true" : "false"}} </th>
-                                                            <td style="padding-left: 3rem">
-                                                                <a style="padding-left: 21px; padding-right: 21px" href="/attendees/{{$att->user_id}}/edit" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
-                                                                <form method="POST" action="/attendees/{{ $att->user_id }}">
-                                                                    @csrf
-                                                                    {{ method_field('DELETE') }}
-                                                                    <div class="form-group">
-                                                                    <br>
-                                                                        <button type="submit" class="btn btn-danger delete-user">
-                                                                            <i style="padding-left: 10px; padding-right: 10px" class="fas fa-trash"></i>
-                                                                        </button>
-                                                                    </div>
-                                                                </form>
-                                                            </td>
-                                                        </tr>
-                                                    @endif
-                                                @endforeach
-                                                
-                                            @endforeach
-                                    @endif
-                                    
-                                </tbody>
-                            </table>
-                
-                            <script>
-                            $(document).ready(function() {
-                                $('#attendeeDisplay').DataTable({
-                                    lengthMenu: [
-                                        [3, 12, 18, -1],
-                                        ['3', '12', '18', 'All']
-                                    ],
-                                    dom:"<'row'<'col-md-6'B><'col-md-6'f>>" +
-                                        "<'row'<'col-sm-12'tr>>" +
-                                        "<'row'<'col-sm-12 col-md-5'i><'col-sm-12 col-md-7'p>>",
-                                    buttons: [
-                                        'pageLength'
-                                    ],
-                                    responsive: true,
-                                });
-                            });
-                        </script>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card ">
-                                <div class="card-header">
-                                    Total: {{ count($attendees) }}
-                                </div>
-                            </div>
-                            <div class="card">
-                                <div class="card-header">
-                                    Unique Emails: {{ $unique_emails }}
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <br>
+                    
                     <div class="card"></div>
                     <br>
-                    <h2>Manage Attendees</h2>
-                    <a href="/attendees/create" class="btn btn-primary btn-sm float-end">Add Attendee</a>            
+                    <h2>Manage End Users</h2>
+                    <a href="/attendees/create" class="btn btn-primary btn-sm float-end">Add User</a>            
                         {{-- <th scope="col">#</th> --}}
                         {{-- <th scope="row"> {{$anime->id}} </th> --}}
                             <table class="table table-striped table-bordered dt-responsive" style="width:100%" id="attendeeList">
@@ -121,7 +34,9 @@
                                     <th scope="col">Last Name</th>
                                     <th scope="col">First Name</th>
                                     <th scope="col">Mobile</th>
-                                    <th scope="col">Deliverable</th>
+                                    <th scope="col">Address</th>
+                                    <th scope="col">City</th>
+                                    <th scope="col">Country</th>
                                     <th scope="col">Actions</th>
                                 </tr>
                             </thead>
@@ -134,8 +49,11 @@
                                             <th scope="row"> {{ ucfirst($attendee->last_name)}} </th>
                                             <th scope="row"> {{ ucfirst($attendee->first_name)}} </th>
                                             <th scope="row"> {{$attendee->mobile_no}} </th>
-                                            <th scope="row"> {{$strVal =  $attendee->is_bonafied == "0"? "true" : "false"}} </th>
+                                            <th scope="row"> {{$attendee->address}} </th>
+                                            <th scope="row"> {{$attendee->city}} </th>
+                                            <th scope="row"> {{$attendee->country}} </th>
                                             <td style="padding-left: 3rem">
+                                                <br>
                                                 <a style="padding-left: 21px; padding-right: 21px" href="/attendees/{{$attendee->user_id}}/edit" class="btn btn-primary"><i class="fas fa-pencil-alt"></i></a>
                                                 <form method="POST" action="/attendees/{{ $attendee->user_id }}">
                                                     @csrf
@@ -216,11 +134,18 @@
                 </div>
             </div>
             <div class="col-md-2 p-3">
-                {{-- <div class="row">
-                    <div class="col-12"> --}}
-                        {{-- <div class="row">
-                            
-                        </div> --}}
+                        <div class="row">
+                            <div class="card ">
+                                <div class="card-header">
+                                    Total End Users: {{ count($all_count) }}
+                                </div>
+                            </div>
+                            <div class="card">
+                                <div class="card-header">
+                                    Unique Emails: {{ $unique_emails }}
+                                </div>
+                            </div>
+                        </div>
                         <form>
                             <div class="checkbox checkbox-success py-3">
                                 <input type="hidden" name="chk_feastapp_name" value="chk_feastapp">
@@ -262,6 +187,8 @@
                                 <button type="submit" class="btn btn-primary">Filter</button>
                             </div> --}}
                         </form>
+                        </div>
+                        
                         
                     {{-- </div> --}}
                 {{-- </div> --}}

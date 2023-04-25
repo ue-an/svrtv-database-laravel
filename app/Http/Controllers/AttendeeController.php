@@ -24,7 +24,7 @@ class AttendeeController extends Controller
 
     public function index(Request $request)
     {
-        $attendees=Attendee::all();
+        $attendees=Attendee::all()->where("is_bonafied", "=", "0");
 
         $chk_attendees = [];
         $chk_feastapp = $request->chk_feastapp;
@@ -35,6 +35,7 @@ class AttendeeController extends Controller
         $chk_hwr = $request->chk_hwr;
         $chk_events_ticket = $request->chk_events_ticket;
 
+        $all_count = Attendee::all();
         $deliverables = Attendee::all()->where("is_bonafied", "=", "0");
         $unique_emails = count($deliverables);
         
@@ -87,7 +88,7 @@ class AttendeeController extends Controller
             }
         }
 
-        return view('attendees.index', compact('attendees', 'chk_attendees', 'chk_feastapp', 'chk_feastbook', 'chk_feastmedia', 'chk_fmm', 'chk_feastph', 'chk_hwr', 'chk_events_ticket', 'unique_emails'));
+        return view('attendees.index', compact('attendees', 'chk_attendees', 'chk_feastapp', 'chk_feastbook', 'chk_feastmedia', 'chk_fmm', 'chk_feastph', 'chk_hwr', 'chk_events_ticket', 'unique_emails', 'all_count'));
     }
 
     /**

@@ -38,7 +38,7 @@ class FeastappRecord extends Model
     /**
      * @var array
      */
-    protected $fillable = ['user_id', 'date_downloaded'];
+    protected $fillable = ['feastapp_id','user_id', 'date_downloaded'];
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\BelongsTo

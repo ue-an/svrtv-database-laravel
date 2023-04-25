@@ -4,7 +4,28 @@
     <div class="bg-light p-5 rounded">
         @auth
         <h2>Feast App</h2>
-            <table class="table table-striped table-bordered dt-responsive" style="width:100%" id="feastappList">
+        {{-- <form action="{{ route('feast-app.upload') }}" enctype="multipart/form-data" method="POST">
+            @csrf
+            <div class="col-lg-12 py-3">
+                <label for="users">Upload Users File</label>
+                <input type="file" class="form-control" style="padding: 3px;" name="file" required />
+            </div>
+            <button type="submit" class="btn btn-success" name="upload">Upload</button>
+        </form> --}}
+        <form action="{{ route('feast-app.upload') }}" method="POST" enctype="multipart/form-data">
+            @csrf
+            
+                {{-- <label for="customFile">Choose file</label>
+                    <input type="file" name="file"  id="customFile"> --}}
+                    <div class="col-lg-12 py-3">
+                        {{-- <label for="users">Upload Users File</label> --}}
+                        <label for="customFile">Upload Feast App Records</label>
+                        {{-- <input type="file" class="form-control" style="padding: 3px;" name="file" required /> --}}
+                        <input type="file" class="form-control" style="padding: 3px;" name="file"  id="customFile">
+                    </div>
+            <button class="btn btn-primary">Import data</button>
+        </form>
+        <table class="table table-striped table-bordered dt-responsive" style="width:100%" id="feastappList">
              <thead>
                  <tr>
                      {{-- <th scope="col">#</th> --}}
