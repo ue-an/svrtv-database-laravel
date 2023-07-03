@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Imports\FeastappRecordImport;
+use App\Models\FeastappRecord;
 use Illuminate\Http\Request;
+use Maatwebsite\Excel\Facades\Excel;
 
 class FeastappRecordController extends Controller
 {
@@ -13,7 +16,9 @@ class FeastappRecordController extends Controller
      */
     public function index()
     {
-        //
+        // $feastapp_records = FeastappRecord::join('attendees', 'feastapp_records.user_id', '=', 'attendees.user_id')->get();
+        $feastapp_records = FeastappRecord::all();
+        return view('feastapp_records.index', compact('feastapp_records'));
     }
 
     /**
@@ -23,7 +28,7 @@ class FeastappRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastapp_records.create');
     }
 
     /**
@@ -80,5 +85,14 @@ class FeastappRecordController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function upload(Request $request) {
+        request()->validate([
+            'file' => 'required|mimes:xlx,xls,xlsx|max:2048'
+        ]);
+        // Excel::import(new FeastappRecordImport, $request->file('users'));
+        Excel::import(new FeastappRecordImport, $request->file('file')->store('feastapp'));
+        return back()->with('massage', 'User Imported Successfully');
     }
 }

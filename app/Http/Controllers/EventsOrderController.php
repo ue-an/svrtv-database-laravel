@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\EventsOrder;
 use Illuminate\Http\Request;
 
 class EventsOrderController extends Controller
@@ -13,7 +14,8 @@ class EventsOrderController extends Controller
      */
     public function index()
     {
-        //
+        $event_orders = EventsOrder::all();
+        return view('event_orders.index', compact('event_orders'));
     }
 
     /**
@@ -23,7 +25,7 @@ class EventsOrderController extends Controller
      */
     public function create()
     {
-        //
+        return view('event_orders.create');
     }
 
     /**
@@ -34,7 +36,21 @@ class EventsOrderController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $request->validate([
+            'order_status'=>'required',
+            'order_created_date'=>'required',
+            'order_completed_date'=>'required',
+            'pay_method'=>'required',
+        ]);
+
+        $event_order = new EventsOrder();
+        $event_order->order_status = $request->order_status;
+        $event_order->order_created_date = $request->order_created_date;
+        $event_order->order_completed_date = $request->order_completed_date;
+        $event_order->pay_method = $request->pay_method;
+
+        $event_order->save();
+        return redirect('/event-orders')->with('success', 'event order successfully added');
     }
 
     /**
@@ -54,9 +70,10 @@ class EventsOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(EventsOrder $event_order)
     {
-        //
+        $event_order = EventsOrder::find($event_order->order_no);
+        return view('event_orders.edit', compact('event_order'));
     }
 
     /**
@@ -66,9 +83,13 @@ class EventsOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, EventsOrder $event_order)
     {
-        //
+        $event_order = EventsOrder::find($event_order->order_no);
+        $event_order->fill($request->all());
+        $event_order->save();
+
+        return redirect('/event-orders')->with('success', 'event order successfully updated');
     }
 
     /**
@@ -77,8 +98,9 @@ class EventsOrderController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(EventsOrder $event_order)
     {
-        //
+        $event_order->delete();
+        return redirect()->back()->with('success', 'event order successfully deleted');
     }
 }

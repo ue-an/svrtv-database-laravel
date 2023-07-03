@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeastphRecord;
 use Illuminate\Http\Request;
 
 class FeastphRecordController extends Controller
@@ -13,7 +14,8 @@ class FeastphRecordController extends Controller
      */
     public function index()
     {
-        //
+        $fphRecords = FeastphRecord::all();
+        return view('feastph_records.index', compact('fphRecords'));
     }
 
     /**
@@ -23,7 +25,7 @@ class FeastphRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastph_records.create');
     }
 
     /**

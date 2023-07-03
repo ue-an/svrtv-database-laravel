@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Haruncpi\LaravelIdGenerator\IdGenerator;
 
 /**
  * @property string $user_id
@@ -51,7 +52,9 @@ class Attendee extends Model
     /**
      * @var array
      */
-    protected $fillable = ['email', 'last_name', 'first_name', 'mobile_no', 'is_bonafied', 'is_feast_attendee', 'feast_name', 'feast_district', 'address', 'city', 'country'];
+    protected $fillable = ['user_id','email', 'last_name', 'first_name', 'mobile_no', 'is_bonafied', 'is_feast_attendee', 'feast_name', 'feast_district', 'address', 'city', 'country'];
+
+    public $timestamps = false;
 
     /**
      * @return \Illuminate\Database\Eloquent\Relations\HasMany

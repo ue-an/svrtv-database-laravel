@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\FeastmediaRecord;
 use Illuminate\Http\Request;
 
 class FeastmediaRecordController extends Controller
@@ -13,7 +14,8 @@ class FeastmediaRecordController extends Controller
      */
     public function index()
     {
-        //
+        $feastmedia_records = FeastmediaRecord::all();
+        return view('feastmedia_records.index', compact('feastmedia_records'));
     }
 
     /**
@@ -23,7 +25,7 @@ class FeastmediaRecordController extends Controller
      */
     public function create()
     {
-        //
+        return view('feastmedia_records.create');
     }
 
     /**
