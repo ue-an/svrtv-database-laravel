@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Attendee;
 use App\Models\Event;
+use App\Models\EventsOrder;
 use App\Models\EventsTicket;
 use App\Models\EventsTicketItem;
 use Illuminate\Http\Request;
@@ -102,7 +103,13 @@ class EventController extends Controller
     public function edit(Event $event)
     {
         $event = Event::find($event->event_id);
-        return view('events.edit', compact('event'));
+        $event_ord = EventsOrder::find($event->order_no);
+        $event_tck = EventsTicket::find($event->ticket_id);
+        // $event = EventsTicket::join('events_tickets', 'events_ticket_items.ticket_id', '=', 'events_tickets.ticket_id')
+        // ->join('events', 'events_tickets.event_id', '=', 'events.event_id')
+        // ->join('events_orders', 'events_ticket_items.order_no', '=', 'events_orders.order_no')
+        // ->join('attendees', 'events_ticket_items.user_id', '=', 'attendees.user_id')->where('events.event_id','=', $event->event_id);
+        return view('events.edit', compact('event','event_ord','event_tck'));
     }
 
     /**

@@ -116,7 +116,7 @@ class AttendeeController extends Controller
             'is_bonafied'=>'required',
         ]);
         $attendee = new Attendee();
-        $attendee->user_id = "att-".Str::random(13);
+        $attendee->user_id = "att-".Str::ranPdom(13);
         $attendee->email = $request->email;
         $attendee->last_name = $request->last_name;
         $attendee->first_name = $request->first_name;
