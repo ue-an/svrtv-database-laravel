@@ -1,3 +1,12 @@
+Shepherd's Voice Radio & Television Foundation, Inc. Database
+<br>
+Confidential information are omitted for privacy purposes.
+<br>
+![svrtv_cover - Copy](https://github.com/ue-an/svrtv-database-laravel/assets/68469141/7c690415-ad62-4cb7-8f65-c29f9aba538a)
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
